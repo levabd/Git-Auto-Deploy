@@ -1,43 +1,52 @@
 <!DOCTYPE html>
-<html lang="en-us">
+<html>
   <head>
-    <meta charset="UTF-8">
-    <title>Git-Auto-Deploy by olipo186</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
     <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <title>Git-Auto-Deploy by levabd</title>
   </head>
+
   <body>
-    <section class="page-header">
-      <h1 class="project-name">Git-Auto-Deploy</h1>
-      <h2 class="project-tagline">Deploy your GitHub, GitLab or Bitbucket projects automatically on Git push events or webhooks using this small HTTP server written in Python. Continuous deployment in it&#39;s most simple form.</h2>
-      <a href="https://github.com/olipo186/Git-Auto-Deploy" class="btn">View on GitHub</a>
-      <a href="https://github.com/olipo186/Git-Auto-Deploy/zipball/master" class="btn">Download .zip</a>
-      <a href="https://github.com/olipo186/Git-Auto-Deploy/tarball/master" class="btn">Download .tar.gz</a>
-    </section>
+    <header>
+      <div class="inner">
+        <h1>Git-Auto-Deploy</h1>
+        <h2>Deploy your GitHub, GitLab or Bitbucket projects automatically on Git push events or webhooks using this small HTTP server written in Python. Continuous deployment in it&#39;s most simple form.</h2>
+        <a href="https://github.com/levabd/Git-Auto-Deploy" class="button"><small>View project on</small> GitHub</a>
+      </div>
+    </header>
 
-    <section class="main-content">
-      <h1>
-<a id="what-is-it" class="anchor" href="#what-is-it" aria-hidden="true"><span class="octicon octicon-link"></span></a>What is it?</h1>
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <h1>
+<a id="what-is-it" class="anchor" href="#what-is-it" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>What is it?</h1>
 
-<p>GitAutoDeploy.py consists of a small HTTP server that listens for Web hook requests sent from GitHub, GitLab or Bitbucket servers. This application allows you to continuously and automatically deploy you projects each time you push new commits to GitHub, GitLab or Bitbucket repository.</p>
+<p>GitAutoDeploy.py consists of a small HTTP server that listens for Web hook requests sent from GitHub, GitLab or Bitbucket servers. This application allows you to continuously and automatically deploy you projects each time you push new commits to your repository.</p>
 
 <p><img src="https://cloud.githubusercontent.com/assets/1056476/9344294/d3bc32a4-4607-11e5-9a44-5cd9b22e61d9.png" alt="workflow"></p>
 
 <h1>
-<a id="how-does-it-work" class="anchor" href="#how-does-it-work" aria-hidden="true"><span class="octicon octicon-link"></span></a>How does it work?</h1>
+<a id="how-does-it-work" class="anchor" href="#how-does-it-work" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>How does it work?</h1>
 
 <p>When commits are pushed to your Git repository, the Git server will notify <code>GitAutoDeploy.py</code> by sending a HTTP POST request with a JSON body to a pre configured URL (your-host:8001). The JSON body contains detailed information about the repository and what event that triggered the request. GitAutoDeploy.py parses and validates the request, and if all goes well it issues a <code>git pull</code>.</p>
 
-<p>Additionally, <code>GitAutoDeploy.py</code> can be configured to execute a shell command upon each successful "git pull", which can be used to trigger custom build actions.</p>
+<p>Additionally, <code>GitAutoDeploy.py</code> can be configured to execute a shell command upon each successful <code>git pull</code>, which can be used to trigger custom build actions or test scripts.</p>
 
 <h1>
-<a id="getting-started" class="anchor" href="#getting-started" aria-hidden="true"><span class="octicon octicon-link"></span></a>Getting started</h1>
+<a id="getting-started" class="anchor" href="#getting-started" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Getting started</h1>
 
 <h2>
-<a id="dependencies" class="anchor" href="#dependencies" aria-hidden="true"><span class="octicon octicon-link"></span></a>Dependencies</h2>
+<a id="dependencies" class="anchor" href="#dependencies" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Dependencies</h2>
 
 <ul>
 <li>Git (tested on version 2.5.0)</li>
@@ -45,22 +54,53 @@
 </ul>
 
 <h2>
-<a id="configuration" class="anchor" href="#configuration" aria-hidden="true"><span class="octicon octicon-link"></span></a>Configuration</h2>
+<a id="configuration" class="anchor" href="#configuration" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Configuration</h2>
 
 <ul>
 <li>Copy <code>GitAutoDeploy.conf.json.example</code> to <code>GitAutoDeploy.conf.json</code>
 </li>
 <li>Modify <code>GitAutoDeploy.conf.json</code> to match your project setup</li>
 <li>Make sure that the <code>pidfilepath</code> path is writable for the user running the script, as well as any other path configured for your repositories.</li>
+<li>If you don't want to execute <code>git pull</code> after webhook was fired, you can leave field <code>"path"</code> empty.</li>
 </ul>
 
 <h2>
-<a id="running-the-application" class="anchor" href="#running-the-application" aria-hidden="true"><span class="octicon octicon-link"></span></a>Running the application</h2>
+<a id="continious-delivery-via-pull-request" class="anchor" href="#continious-delivery-via-pull-request" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Continious Delivery via Pull request</h2>
+
+<p><img src="https://raw.githubusercontent.com/levabd/Git-Auto-Deploy/master/continious_delivery_process.png" alt="Workflow"></p>
+
+<p>If you use continious delivery (such as this workflow) you may want to trigger deploy event when pull request is opened or closed.
+You can follow next steps to implement CD process:</p>
+
+<ul>
+<li>Set repo "url" to <code>"https://api.github.com"</code>
+</li>
+<li>Enable "pullrequestfilter"</li>
+<li>Configure "action" that you want to listen</li>
+<li>Configure branch in which pull request trying to merge (called "ref" in configure)</li>
+</ul>
+
+<p>Example</p>
+
+<pre><code>"url": "https://api.github.com/repos/olipo186/Git-Auto-Deploy",
+"pullrequestfilter": true,
+"action": "closed",
+"ref": "testing",
+"deploy": "echo deploying after pull request"
+</code></pre>
+
+<h2>
+<a id="logging" class="anchor" href="#logging" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Logging</h2>
+
+<p>To start logging you can defile <code>"logfilepath": "/home/hermes/gitautodeploy.log"</code>. Note that you can<code>t see triggered command output when log is defined, only script output. If you leave</code><code>"logfilepath"</code>` empty - everething will work as usual (without log).</p>
+
+<h2>
+<a id="running-the-application" class="anchor" href="#running-the-application" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Running the application</h2>
 
 <p><code>python GitAutoDeploy.py</code></p>
 
 <h2>
-<a id="command-line-options" class="anchor" href="#command-line-options" aria-hidden="true"><span class="octicon octicon-link"></span></a>Command line options</h2>
+<a id="command-line-options" class="anchor" href="#command-line-options" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Command line options</h2>
 
 <p>--daemon-mode (-d) Run in background (daemon mode)
 --quiet (-q) Suppress all output
@@ -69,17 +109,17 @@
 --config  Specify custom configuration file</p>
 
 <h2>
-<a id="start-automatically-on-boot" class="anchor" href="#start-automatically-on-boot" aria-hidden="true"><span class="octicon octicon-link"></span></a>Start automatically on boot</h2>
+<a id="start-automatically-on-boot" class="anchor" href="#start-automatically-on-boot" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Start automatically on boot</h2>
 
 <h3>
-<a id="crontab" class="anchor" href="#crontab" aria-hidden="true"><span class="octicon octicon-link"></span></a>Crontab</h3>
+<a id="crontab" class="anchor" href="#crontab" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Crontab</h3>
 
 <p>The easiest way to configure your system to automatically start <code>GitAutoDeploy.py</code> after a reboot is through crontab. Open crontab in edit mode using <code>crontab -e</code> and add the following:</p>
 
 <p><code>@reboot /usr/bin/python /path/to/GitAutoDeploy.py --daemon-mode --quiet</code></p>
 
 <h3>
-<a id="debian-and-sys-v-like-init-system" class="anchor" href="#debian-and-sys-v-like-init-system" aria-hidden="true"><span class="octicon octicon-link"></span></a>Debian and Sys-V like init system.</h3>
+<a id="debian-and-sys-v-like-init-system" class="anchor" href="#debian-and-sys-v-like-init-system" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Debian and Sys-V like init system.</h3>
 
 <ul>
 <li>Copy file <code>initfiles/debianLSBInitScripts/gitautodeploy</code> to <code>/etc/init.d/</code>
@@ -93,8 +133,27 @@
 </li>
 </ul>
 
+<h3>
+<a id="systemd" class="anchor" href="#systemd" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Systemd</h3>
+
+<ul>
+<li>Copy file <code>initfiles/systemd/gitautodeploy.service</code> to <code>/etc/systemd/system</code>
+</li>
+<li>Also you need to make <code>GitAutoDeploy.py</code> executable (if it isn't already): <code>chmod 755 GitAutoDeploy.py</code>
+</li>
+<li>And also you need to create the user and the group <code>www-data</code> if those not exists <code>useradd -U www-data</code>
+</li>
+<li>This init script assumes that you have <code>GitAutoDeploy.py</code> installed in <code>/opt/Git-Auto-Deploy/</code>. If this is not the case, edit the <code>gitautodeploy.service</code> service file and modify <code>ExecStart</code> and <code>WorkingDirectory</code>.</li>
+<li>now reload daemons <code>systemctl daemon-reload</code>
+</li>
+<li>Fire it up <code>systemctl start gitautodeploy</code>
+</li>
+<li>Make is start on system boot <code>systemctl enable gitautodeploy</code>
+</li>
+</ul>
+
 <h2>
-<a id="configure-github" class="anchor" href="#configure-github" aria-hidden="true"><span class="octicon octicon-link"></span></a>Configure GitHub</h2>
+<a id="configure-github" class="anchor" href="#configure-github" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Configure GitHub</h2>
 
 <ul>
 <li>Go to your repository -&gt; Settings -&gt; Webhooks and Services -&gt; Add webhook</li>
@@ -103,7 +162,7 @@
 </ul>
 
 <h2>
-<a id="configure-gitlab" class="anchor" href="#configure-gitlab" aria-hidden="true"><span class="octicon octicon-link"></span></a>Configure GitLab</h2>
+<a id="configure-gitlab" class="anchor" href="#configure-gitlab" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Configure GitLab</h2>
 
 <ul>
 <li>Go to your repository -&gt; Settings -&gt; Web hooks</li>
@@ -112,22 +171,42 @@
 </ul>
 
 <h2>
-<a id="configure-bitbucket" class="anchor" href="#configure-bitbucket" aria-hidden="true"><span class="octicon octicon-link"></span></a>Configure Bitbucket</h2>
+<a id="configure-bitbucket" class="anchor" href="#configure-bitbucket" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Configure Bitbucket</h2>
 
 <ul>
 <li>Go to your repository -&gt; Settings -&gt; Webhooks -&gt; Add webhook</li>
 <li>In "URL", enter your hostname and port (your-host:8001)</li>
 <li>Hit "Save"</li>
 </ul>
+        </section>
 
-      <footer class="site-footer">
-        <span class="site-footer-owner"><a href="https://github.com/olipo186/Git-Auto-Deploy">Git-Auto-Deploy</a> is maintained by <a href="https://github.com/olipo186">olipo186</a>.</span>
+        <aside id="sidebar">
+          <a href="https://github.com/levabd/Git-Auto-Deploy/zipball/master" class="button">
+            <small>Download</small>
+            .zip file
+          </a>
+          <a href="https://github.com/levabd/Git-Auto-Deploy/tarball/master" class="button">
+            <small>Download</small>
+            .tar.gz file
+          </a>
 
-        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
-      </footer>
+          <p class="repo-owner"><a href="https://github.com/levabd/Git-Auto-Deploy"></a> is maintained by <a href="https://github.com/levabd">levabd</a>.</p>
 
-    </section>
+          <p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
+        </aside>
+      </div>
+    </div>
 
-  
+            <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-74410260-1");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
   </body>
 </html>
